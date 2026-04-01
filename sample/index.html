@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebNN Stable Diffusion</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Load latest dev ONNX Runtime Web from CDN
+        async function loadOrt() {
+            const res = await fetch("https://data.jsdelivr.com/v1/packages/npm/onnxruntime-web");
+            const data = await res.json();
+            const version = data.tags.dev;
+            const script = document.createElement("script");
+            script.src = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${version}/dist/ort.webgpu.min.js`;
+            script.onload = () => {
+                document.getElementById("ort-version").textContent = `ONNX Runtime Web ${version}`;
+                import("./app.js");
+            };
+            document.head.appendChild(script);
+        }
+        loadOrt();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>WebNN Stable Diffusion</h1>
+        <p class="subtitle">Image generation powered by WebNN + ONNX Runtime</p>
+        <p class="subtitle" id="ort-version">Loading ONNX Runtime...</p>
+
+        <div class="controls">
+            <div class="row">
+                <label for="model-select">Model</label>
+                <select id="model-select">
+                    <option value="sd-turbo">SD Turbo</option>
+                    <option value="sdxl-turbo">SDXL Turbo</option>
+                    <option value="sd-1.5">Stable Diffusion 1.5</option>
+                </select>
+                <button id="load-btn">Load Model</button>
+            </div>
+
+            <div class="row" id="steps-row" style="display:none">
+                <label for="steps-select">Steps</label>
+                <select id="steps-select">
+                    <option value="20">20</option>
+                    <option value="25" selected>25</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <label for="prompt">Prompt</label>
+                <input type="text" id="prompt" placeholder="a beautiful landscape painting" value="a beautiful landscape painting" disabled>
+                <button id="generate-btn" disabled>Generate</button>
+            </div>
+
+            <div class="row">
+                <label for="seed">Seed</label>
+                <input type="number" id="seed" placeholder="random" min="0">
+            </div>
+        </div>
+
+        <div id="status" class="status"></div>
+        <div id="progress-bar-container" class="progress-bar-container hidden">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <canvas id="canvas" width="512" height="512"></canvas>
+
+        <div id="timing" class="timing hidden">
+            <table>
+                <tr><td>Text Encode</td><td id="t-text-encode">-</td></tr>
+                <tr><td>UNet Inference</td><td id="t-unet">-</td></tr>
+                <tr><td>VAE Decode</td><td id="t-vae-decode">-</td></tr>
+                <tr><td><strong>Total</strong></td><td id="t-total"><strong>-</strong></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- app.js is loaded dynamically after ORT is ready -->
+</body>
+</html>
