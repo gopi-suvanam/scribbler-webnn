@@ -28,6 +28,13 @@ h1 {
     color: #fff;
 }
 
+.tagline {
+    font-size: 1rem;
+    color: #5865f2;
+    font-weight: 500;
+    margin-top: -0.5rem;
+}
+
 .subtitle {
     font-size: 0.85rem;
     color: #888;
@@ -164,4 +171,92 @@ canvas {
 .timing td:last-child {
     text-align: right;
     font-variant-numeric: tabular-nums;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #16213e;
+}
+
+.tab {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #16213e;
+    color: #888;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tab:hover {
+    color: #ccc;
+}
+
+.tab.active {
+    background: #5865f2;
+    color: #fff;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+/* Audio player */
+.audio-player {
+    width: 100%;
+    max-width: 512px;
+    border-radius: 10px;
+}
+
+/* Notebook button */
+.notebook-btn {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: #16213e;
+    color: #5865f2;
+    border: 1px solid #5865f2;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 0.5rem;
+}
+
+.notebook-btn:hover {
+    background: #5865f2;
+    color: #fff;
+}
+
+/* LLM output */
+.llm-output {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #0f0f23;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
